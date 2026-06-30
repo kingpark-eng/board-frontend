@@ -5,7 +5,8 @@ import PostListPage from "./pages/PostListPage";
 import RegisterPage from "./pages/RegisterPage";
 import PostFormPage from "./pages/PostFormPage";
 import PostDetailPage from "./pages/PostDetailPage";
-
+import RoutinePage from "./pages/RoutinePage";
+import MainPage from "./pages/MainPage";
 
 // element에 컴포넌트를 넘길때에는 태그형태로 넘겨줘야함.
 function App() {
@@ -14,12 +15,14 @@ function App() {
       <Header />
 
       <Routes>
-          <Route path="/"          element={<PostListPage />} />
+          <Route path="/"          element={<MainPage />} />
+          <Route path="/posts"          element={<PostListPage />} />
           <Route path="/login"     element={<LoginPage />} />
           <Route path="/register"  element={<RegisterPage />} />
           <Route path="/posts/new"      element={<PostFormPage />} />
           <Route path="/posts/:id"      element={<PostDetailPage />} />
           <Route path="/posts/:id/edit"      element={<PostFormPage />} />
+          <Route path="/api/routines" element={<RoutinePage/>} />
       </Routes>
     </>
   );

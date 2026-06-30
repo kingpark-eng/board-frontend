@@ -15,27 +15,22 @@ function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    console.log("여기임1");
-    e.preventDefault();
-    console.log("여기임2");
+  const handleSubmit = async (e) => { 
+    e.preventDefault(); 
     setError("");
 
     // 1. 비밀번호 일치 확인 (프론트 검증)
-    if (password !== passwordConfirm) {
-          console.log("여기임3");
+    if (password !== passwordConfirm) { 
       setError("비밀번호가 일치하지 않습니다.");
       return;
     }
 
     // 2. 비밀번호 길이 검증 (예시)
-    if (password.length < 8) {
-          console.log("여기임4");
+    if (password.length < 8) { 
       setError("비밀번호는 8자 이상이어야 합니다.");
       return;
     }
-
-    console.log("여기임5");
+ 
     setLoading(true);
     try {
       await register({ email, nickname, password });
