@@ -1,0 +1,179 @@
+/* ─────────────────────────────────────────────
+   Layout.module.css
+   헤더 + 푸터 — 루틴 다크 테마 공통
+   ───────────────────────────────────────────── */
+
+.layout {
+  --bg:       #0f1117;
+  --surface:  #181c27;
+  --surface2: #1f2436;
+  --border:   #2a3050;
+  --accent:   #4f8ef7;
+  --accent2:  #7c5cbf;
+  --text:     #e2e6f0;
+  --text2:    #8b93b0;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ── 헤더 ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 14px 32px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logoIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(79, 142, 247, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logoText {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+}
+.navLink {
+  font-size: 14px;
+  padding: 7px 15px;
+  border-radius: 8px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.navLink:hover {
+  color: var(--text);
+  background: var(--surface2);
+}
+.navLinkActive {
+  color: var(--accent);
+  background: rgba(79, 142, 247, 0.14);
+  font-weight: 500;
+}
+
+.userArea {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text);
+}
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(124, 92, 191, 0.18);
+  color: #a07ef0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.logoutBtn {
+  font-size: 13px;
+  padding: 7px 15px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.logoutBtn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* ── 본문 ── */
+.main {
+  flex: 1;
+}
+
+/* ── 푸터 ── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 22px 32px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text2);
+}
+.footerIcon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(79, 142, 247, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footerNav {
+  display: flex;
+  gap: 18px;
+}
+.footerNav a {
+  font-size: 13px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.footerNav a:hover {
+  color: var(--text);
+}
+.footerCopy {
+  font-size: 12px;
+  color: var(--text2);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+@media (max-width: 640px) {
+  .header { gap: 16px; padding: 12px 18px; }
+  .nav { display: none; }        /* 모바일에선 네비 숨김 (필요시 햄버거로) */
+  .footer { padding: 20px 18px; }
+}

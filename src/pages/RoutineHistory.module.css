@@ -1,0 +1,184 @@
+/* ─────────────────────────────────────────────
+   RoutineHistory.module.css
+   루틴 기록 — 월별 히트맵 달력 + 날짜별 상세
+   ───────────────────────────────────────────── */
+
+.page {
+  --bg:       #0f1117;
+  --surface:  #181c27;
+  --surface2: #1f2436;
+  --border:   #2a3050;
+  --accent:   #4f8ef7;
+  --green:    #3ecf8e;
+  --greenRgb: 62, 207, 142;
+  --red:      #e05c5c;
+  --text:     #e2e6f0;
+  --text2:    #8b93b0;
+  --text3:    #5a6180;
+
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ── 상단: 제목 + 월 이동 ── */
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.monthNav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.navBtn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text2);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.15s ease;
+}
+.navBtn:hover { color: var(--text); border-color: var(--accent); }
+.monthLabel {
+  font-size: 15px;
+  font-weight: 500;
+  min-width: 92px;
+  text-align: center;
+}
+
+/* ── 요일 헤더 ── */
+.weekHead {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.weekHead div {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text2);
+}
+.sun { color: var(--red) !important; }
+.sat { color: var(--accent) !important; }
+
+/* ── 달력 그리드 ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.cell {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+  color: var(--text);
+  user-select: none;
+}
+.cell:hover { transform: scale(1.06); }
+.empty { cursor: default; }
+.empty:hover { transform: none; }
+
+/* 기록 없는 날 */
+.future, .none {
+  background: var(--surface2);
+  border-color: var(--border);
+  color: var(--text3);
+}
+
+/* 오늘 표시 */
+.today { border-color: var(--accent) !important; border-width: 2px; font-weight: 500; }
+
+/* 선택된 날 */
+.selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ── 범례 ── */
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text3);
+}
+.legendBox {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+/* ── 날짜 상세 ── */
+.detail {
+  margin-top: 22px;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.detailHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.detailDate { font-size: 15px; font-weight: 500; }
+.detailRatio { font-size: 13px; color: var(--green); }
+.detailRatioZero { font-size: 13px; color: var(--text2); }
+
+.logList { display: flex; flex-direction: column; gap: 10px; }
+.logItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.logDone { color: var(--text2); }
+.logDone .logText { text-decoration: line-through; }
+.logUndone { color: var(--text3); }
+.logIcon { flex-shrink: 0; display: flex; }
+
+.detailEmpty {
+  padding: 12px 0;
+  text-align: center;
+  color: var(--text3);
+  font-size: 13px;
+}
+
+.hint {
+  margin-top: 22px;
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--text3);
+  font-size: 13px;
+  line-height: 1.7;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+}

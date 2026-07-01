@@ -6,7 +6,12 @@ export function getRoutines(){
 }
 
 export const createRoutines=(data)=>{
-    return api.post("/api/routines". data).then(res=>res.data);
+    console.log(data);
+    const json = {
+        "title" : data
+    };
+    console.log(json);
+    return api.post("/api/routines", json).then(res=>res.data);
 }
 
 // export function toggleDone(){

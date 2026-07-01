@@ -1,0 +1,233 @@
+/* ─────────────────────────────────────────────
+   Home.module.css
+   메인 대시보드 — 히어로 + (오늘의 루틴 | 게시판) 2단
+   ───────────────────────────────────────────── */
+
+.page {
+  --bg:       #0f1117;
+  --surface:  #181c27;
+  --surface2: #1f2436;
+  --border:   #2a3050;
+  --accent:   #4f8ef7;
+  --accent2:  #7c5cbf;
+  --green:    #3ecf8e;
+  --yellow:   #f0a940;
+  --red:      #e05c5c;
+  --text:     #e2e6f0;
+  --text2:    #8b93b0;
+
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ── 히어로 ── */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px 34px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60%;
+  right: 4%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(79,142,247,0.16), transparent 65%);
+  pointer-events: none;
+}
+.heroText { position: relative; z-index: 1; }
+.greeting {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.heroTitle {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+.heroArt { position: relative; z-index: 1; width: 108px; height: 108px; flex-shrink: 0; }
+.ringTrack { fill: none; stroke: var(--surface2); stroke-width: 8; }
+.ringFill {
+  fill: none; stroke: var(--green); stroke-width: 8; stroke-linecap: round;
+  transform: rotate(-90deg); transform-origin: center;
+  transition: stroke-dashoffset 0.6s ease;
+}
+.ringLabel { font-size: 15px; font-weight: 700; fill: var(--text); }
+
+/* ── 2단 그리드 ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* 컬럼 공통 헤더 */
+.colHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.colTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.colTitle svg { flex-shrink: 0; }
+.count { font-size: 12px; color: var(--text2); font-variant-numeric: tabular-nums; }
+
+.smallBtn {
+  font-size: 12px;
+  padding: 5px 13px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+  text-decoration: none;
+}
+.smallBtn:hover { filter: brightness(1.1); }
+
+/* ── 왼쪽: 루틴 ── */
+.progressBar {
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.progressFill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+.routineList { display: flex; flex-direction: column; gap: 8px; }
+.routineCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.15s ease, opacity 0.2s ease;
+}
+.routineCard:hover { border-color: var(--accent); }
+.routineDone { opacity: 0.55; }
+.check {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+.check:hover { border-color: var(--green); }
+.checkOn { background: var(--green); border-color: var(--green); }
+.checkMark { color: #0f1117; font-size: 14px; font-weight: 700; line-height: 1; }
+.routineTitle { flex: 1; font-size: 14px; word-break: break-all; }
+.routineTitleDone { text-decoration: line-through; color: var(--text2); }
+
+.addRow { display: flex; gap: 8px; margin-top: 12px; }
+.addInput {
+  flex: 1;
+  padding: 11px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.addInput::placeholder { color: var(--text2); }
+.addInput:focus { border-color: var(--accent); }
+
+/* ── 오른쪽: 게시판 ── */
+.searchRow { display: flex; gap: 8px; margin-bottom: 14px; }
+.searchInput {
+  flex: 1;
+  padding: 11px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.searchInput::placeholder { color: var(--text2); }
+.searchInput:focus { border-color: var(--accent); }
+.searchBtn {
+  flex-shrink: 0;
+  padding: 0 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text2);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.searchBtn:hover { color: var(--text); border-color: var(--accent); }
+
+.postList {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.postRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.12s ease;
+}
+.postRow:last-child { border-bottom: none; }
+.postRow:hover { background: var(--surface2); }
+.postTitle { font-size: 14px; color: var(--text); word-break: break-all; }
+.postMeta { font-size: 12px; color: var(--text2); white-space: nowrap; flex-shrink: 0; }
+
+.empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text2);
+  font-size: 13px;
+  line-height: 1.7;
+}
