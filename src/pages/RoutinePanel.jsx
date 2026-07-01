@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./Home.module.css";
-// import { getRoutines, addRoutine, deleteRoutine, toggleRoutineLog } from "../api/routinesApi";
+import { getRoutines, addRoutine, deleteRoutine, toggleRoutineLog } from "../api/routinesApi";
 
 // 오늘의 루틴 패널.
 // compact=true 로 넘기면 메인 대시보드용(입력창 유지, 여백 축소),
@@ -14,16 +14,8 @@ export default function RoutinePanel({ compact = false }) {
     let alive = true;
     (async () => {
       try {
-        // const res = await getRoutines();
-        // if (alive) setRoutines(res.data);
-
-        // ── 데모 데이터 (API 연동 시 위 두 줄로 교체) ──
-        if (alive)
-          setRoutines([
-            { id: 1, title: "물 2L 마시기", done: false },
-            { id: 2, title: "아침 스트레칭 10분", done: true },
-            { id: 3, title: "저녁 공부 1시간", done: false },
-          ]);
+        const res = await getRoutines();
+        if (alive) setRoutines(res.data);
       } finally {
         if (alive) setLoading(false);
       }
@@ -32,8 +24,8 @@ export default function RoutinePanel({ compact = false }) {
       alive = false;
     };
   }, []);
-
-  const doneCount = routines.filter((r) => r.done).length;
+  
+  const doneCount = (routines ?? []).filter((r) => r?.done).length; 
   const total = routines.length;
   const percent = total ? Math.round((doneCount / total) * 100) : 0;
 
@@ -48,9 +40,8 @@ export default function RoutinePanel({ compact = false }) {
   const add = async () => {
     const title = input.trim();
     if (!title) return;
-    // const res = await addRoutine(title);
-    // setRoutines((prev) => [...prev, res.data]);
-    setRoutines((prev) => [...prev, { id: Date.now(), title, done: false }]);
+    const res = await addRoutine(title);
+    setRoutines((prev) => [...prev, res.data]);
     setInput("");
   };
 
@@ -80,15 +71,16 @@ export default function RoutinePanel({ compact = false }) {
         </div>
       ) : (
         <div className={styles.routineList}>
-          {routines.map((r) => (
+          {routines.map((r, i) => (
             <div
               key={r.id}
               className={`${styles.routineCard} ${
                 r.done ? styles.routineDone : ""
               }`}
             >
+              {r.done === '0' ? "true" : "false"}
               <button
-                className={`${styles.check} ${r.done ? styles.checkOn : ""}`}
+                className={`${styles.check} ${r.done === '1' ? styles.checkOn : ""}`}
                 onClick={() => toggle(r.id)}
                 aria-label={r.done ? "완료 취소" : "완료 표시"}
               >

@@ -1,4 +1,3 @@
-import Header from "./components/common/Header";
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import PostListPage from "./pages/PostPanel";

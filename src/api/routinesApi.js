@@ -5,12 +5,10 @@ export function getRoutines(){
     return api.get("/api/routines");
 }
 
-export const createRoutines=(data)=>{
-    console.log(data);
+export const addRoutine=(data)=>{
     const json = {
         "title" : data
     };
-    console.log(json);
     return api.post("/api/routines", json).then(res=>res.data);
 }
 
