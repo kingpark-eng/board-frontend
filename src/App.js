@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import RoutinePanel from "./pages/RoutinePanel";
 import RoutineHistory from "./pages/RoutineHistory";
+import ProtectedRoute from "./context/ProtectedRoute";
 
 // element에 컴포넌트를 넘길때에는 태그형태로 넘겨줘야함.
 function App() {
@@ -17,15 +18,30 @@ function App() {
 
       <Layout>
         <Routes>
-            <Route path="/"          element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+
+            {/* 로그인 필수 페이지들 */}
+            <Route path="/" element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } />
+            <Route path="/history" element={
+              <ProtectedRoute>
+                <RoutineHistory />
+              </ProtectedRoute>
+            } />
+            {/* <Route path="/"          element={<LoginPage />} />
             <Route path="/posts"          element={<PostListPage />} />
-            <Route path="/login"     element={<LoginPage />} />
-            <Route path="/register"  element={<RegisterPage />} />
+            <Route path="/home"     element={<Home />} /> */}
+            {/* <Route path="/login"     element={<LoginPage />} /> */}
+            {/* <Route path="/register"  element={<RegisterPage />} />
             <Route path="/posts/new"      element={<PostFormPage />} />
             <Route path="/posts/:id"      element={<PostDetailPage />} />
             <Route path="/posts/:id/edit"      element={<PostFormPage />} />
             <Route path="/routines" element={<RoutinePanel/>} />
-            <Route path="/history" element={<RoutineHistory />} />
+            <Route path="/history" element={<RoutineHistory />} /> */}
         </Routes>
       </Layout>
     </>

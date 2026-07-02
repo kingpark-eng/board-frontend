@@ -20,8 +20,8 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      await login(email, password);
-      navigate("/"); // 성공 → 게시판 목록으로
+      await login(email, password); 
+      navigate("/"); // 성공 → 게시판 목록으로 
     } catch (err) {
       // 백엔드가 보낸 에러 메시지가 있으면 그걸, 없으면 기본 문구
       const message =

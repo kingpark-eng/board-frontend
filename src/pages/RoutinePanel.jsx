@@ -15,6 +15,7 @@ export default function RoutinePanel({ compact = false }) {
     (async () => {
       try {
         const res = await getRoutines();
+        console.log(res.data);
         if (alive) setRoutines(res.data);
       } finally {
         if (alive) setLoading(false);
@@ -71,25 +72,20 @@ export default function RoutinePanel({ compact = false }) {
         </div>
       ) : (
         <div className={styles.routineList}>
-          {routines.map((r, i) => (
+          {routines.map((r) => (
             <div
               key={r.id}
-              className={`${styles.routineCard} ${
-                r.done ? styles.routineDone : ""
-              }`}
+              className={`${styles.routineCard} ${r.done ? styles.routineDone : ""}`}
             >
-              {r.done === '0' ? "true" : "false"}
               <button
-                className={`${styles.check} ${r.done === '1' ? styles.checkOn : ""}`}
+                className={`${styles.check} ${r.done ? styles.checkOn : ""}`}
                 onClick={() => toggle(r.id)}
                 aria-label={r.done ? "완료 취소" : "완료 표시"}
               >
                 {r.done && <span className={styles.checkMark}>✓</span>}
               </button>
               <span
-                className={`${styles.routineTitle} ${
-                  r.done ? styles.routineTitleDone : ""
-                }`}
+                className={`${styles.routineTitle} ${r.done ? styles.routineTitleDone : ""}`}
               >
                 {r.title}
               </span>

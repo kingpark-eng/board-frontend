@@ -1,4 +1,4 @@
-//지갑
+//지갑 (로그인 상태 판단)
 import { createContext, useContext, useState, useEffect} from 'react';
 import api from '../api/axios';
 
@@ -8,6 +8,7 @@ const AuthContext = createContext(null);
 // 2. 실제 상태를 담아 자식들에게 뿌려주는 Provider
 // AuthProvider 컴포넌트   — 실제 상태(user, token)와 함수(login, logout)를 담는 곳
 export function AuthProvider({ children }) {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -17,7 +18,7 @@ export function AuthProvider({ children }) {
             api.get("/api/auth/me")
                 .then((res) => setUser(res.data))
                 .catch(() => localStorage.removeItem("token"))
-                .finally(() => setLoading(false));
+                .finally(() => {setLoading(false); setIsLoggedIn(true)});
         }else{
             setLoading(false);
         }
@@ -27,17 +28,20 @@ export function AuthProvider({ children }) {
         const res = await api.post("/api/auth/login", {email, password});
         localStorage.setItem("token", res.data.token);
         setUser(res.data.user);
+        setIsLoggedIn(true);
     }
 
     const logout = ()=>{
         localStorage.removeItem("token");
         setUser(null);
+        setIsLoggedIn(false);
     }
 
     const register = async({email, nickname, password})=>{ 
         const res = await api.post("/api/auth/register", {email, nickname, password});
         localStorage.setItem("token", res.data.token);
         setUser(res.data);
+        setIsLoggedIn(false);
     }
 
     
@@ -47,6 +51,8 @@ export function AuthProvider({ children }) {
         ,login
         ,logout
         ,register
+        ,isLoggedIn
+        ,loading
         ,isAuthenticated: !!user
     }
 

@@ -1,5 +1,6 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import styles from "./Layout.module.css";
+import { useAuth } from "../context/AuthContext";
 
 // 로고 아이콘 (체크박스 모티브)
 function LogoIcon({ size = 17 }) {
@@ -17,9 +18,10 @@ function LogoIcon({ size = 17 }) {
 // react-router의 <Outlet/>과 조합해 사용하세요.
 export default function Layout({ children }) {
   const navigate = useNavigate();
-
+  const {user, logout, isLoggedIn} = useAuth();
+  const nickname = user?.nickname;
   // 실제로는 AuthContext에서 가져오세요.
-  const { nickname, isLoggedIn, logout } = useAuthFallback();
+//   const { nickname, isLoggedIn, logout } = useAuthFallback();
 
   const handleLogout = () => {
     logout?.();
@@ -93,6 +95,7 @@ export default function Layout({ children }) {
 // 실제로는 이 함수를 지우고 상단에서
 //   import { useAuth } from "../context/AuthContext";
 // 를 가져와 useAuth()를 쓰세요.
-function useAuthFallback() {
-  return { nickname: "kingp", isLoggedIn: true, logout: () => {} };
-}
+// function useAuthFallback() {
+    
+//   return { nickname: "kingp", isLoggedIn: true, logout: () => {} };
+// }
