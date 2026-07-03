@@ -9,33 +9,39 @@ export default function RoutinePanel({ compact = false }) {
   const [routines, setRoutines] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
-
+  console.log(routines + " 1");
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
         const res = await getRoutines();
-        console.log(res.data);
+        console.log(routines + " 2");
         if (alive) setRoutines(res.data);
       } finally {
         if (alive) setLoading(false);
       }
+      console.log(routines + " 3");
     })();
     return () => {
       alive = false;
     };
   }, []);
-  
+  console.log(routines + " 4");
   const doneCount = (routines ?? []).filter((r) => r?.done).length; 
+  console.log(routines + " 5");
   const total = routines.length;
   const percent = total ? Math.round((doneCount / total) * 100) : 0;
 
   const toggle = async (id) => {
+    console.log(routines + " 6");
     // 낙관적 업데이트: UI 먼저 바꾸고 실패 시 롤백
-    setRoutines((prev) =>
+    setRoutines((prev) => prev.map((r) => (r.id === id ? { ...r, done: !r.done } : r)));
+    try { 
+      await toggleRoutineLog(id); 
+    } catch { /* 롤백 처리 */  
+      setRoutines((prev) =>
       prev.map((r) => (r.id === id ? { ...r, done: !r.done } : r))
-    );
-    // try { await toggleRoutineLog(id); } catch { /* 롤백 처리 */ }
+    )}
   };
 
   const add = async () => {

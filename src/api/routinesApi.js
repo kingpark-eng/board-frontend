@@ -12,6 +12,10 @@ export const addRoutine=(data)=>{
     return api.post("/api/routines", json).then(res=>res.data);
 }
 
+export const toggleRoutineLog=(id)=>{
+
+}
+
 // export function toggleDone(){
 //     return api.get("/api/routines");
 // }
