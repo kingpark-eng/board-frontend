@@ -13,9 +13,29 @@ export const addRoutine=(data)=>{
 }
 
 export const toggleRoutineLog=(id)=>{
+    const json = {
+        "id" : id
+    };
 
+    return api.post("/api/routinelog", json).then(res=>res.data);
 }
 
+export const getMonthlyLogs=(year, month)=>{
+    return api.get("/api/routinelog/monthlyLogs", {
+        params: {
+            year, month
+        }
+    });
+}
+
+export const getDayLogs=(logDate)=>{
+    console.log(logDate);
+    return api.get("/api/routinelog/dayLogs", {
+        params: {
+            "logDate" : logDate
+        }
+    })
+}
 // export function toggleDone(){
 //     return api.get("/api/routines");
 // }

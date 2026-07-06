@@ -22,7 +22,7 @@ export default function Layout({ children }) {
   const nickname = user?.nickname;
   // 실제로는 AuthContext에서 가져오세요.
 //   const { nickname, isLoggedIn, logout } = useAuthFallback();
-
+ 
   const handleLogout = () => {
     logout?.();
     navigate("/login");
@@ -82,8 +82,7 @@ export default function Layout({ children }) {
         </div>
         <nav className={styles.footerNav}>
           <Link to="/">메인</Link>
-          <Link to="/posts">게시글</Link>
-          <Link to="/routines">루틴</Link>
+          <Link to="/history">기록</Link> 
         </nav>
         <div className={styles.footerCopy}>© 2026 Routinary</div>
       </footer>

@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token"); 
         if (token) {
             api.get("/api/auth/me")
                 .then((res) => setUser(res.data))
@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
     const login = async (email, password) => {
         const res = await api.post("/api/auth/login", {email, password});
         localStorage.setItem("token", res.data.token);
-        setUser(res.data.user);
+        setUser(res.data);
         setIsLoggedIn(true);
     }
 

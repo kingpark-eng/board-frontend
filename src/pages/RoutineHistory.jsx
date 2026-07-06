@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import styles from "./RoutineHistory.module.css";
-// import { getMonthlyLogs, getDayLogs } from "../api/routinesApi";
+import { getMonthlyLogs, getDayLogs } from "../api/routinesApi";
 
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -42,20 +42,20 @@ export default function RoutineHistory() {
   useEffect(() => {
     let alive = true;
     (async () => {
-      // const res = await getMonthlyLogs(year, month + 1);
-      // if (alive) setMonthData(res.data);
+      const res = await getMonthlyLogs(year, month + 1);
+      if (alive) setMonthData(res.data);
 
       // ── 데모 데이터 (API 연동 시 위로 교체) ──
-      const demo = {};
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      for (let d = 1; d <= daysInMonth; d++) {
-        const key = `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-        if (key > todayStr) continue; // 미래는 비움
-        const total = 5;
-        const done = Math.floor(Math.random() * 6); // 0~5 데모
-        demo[key] = { done, total };
-      }
-      if (alive) setMonthData(demo);
+      // const demo = {};
+      // const daysInMonth = new Date(year, month + 1, 0).getDate();
+      // for (let d = 1; d <= daysInMonth; d++) {
+      //   const key = `${year}-${String(month + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+      //   if (key > todayStr) continue; // 미래는 비움
+      //   const total = 5;
+      //   const done = Math.floor(Math.random() * 6); // 0~5 데모
+      //   demo[key] = { done, total };
+      // }
+      // if (alive) setMonthData(demo);
     })();
     return () => { alive = false; };
   }, [year, month]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -65,14 +65,15 @@ export default function RoutineHistory() {
     if (!selected) return;
     let alive = true;
     (async () => {
-      // const res = await getDayLogs(selected);
-      // if (alive) setDayLogs(res.data);
+      const res = await getDayLogs(selected);
+      if (alive) setDayLogs(res.data);
 
       // ── 데모: 완료 개수만큼 done 처리 ──
-      const info = monthData[selected] ?? { done: 0, total: 5 };
-      const names = ["물 2L 마시기", "아침 스트레칭 10분", "저녁 공부 1시간", "영양제 챙기기", "일기 쓰기"];
-      const logs = names.map((title, i) => ({ id: i + 1, title, done: i < info.done }));
-      if (alive) setDayLogs(logs);
+      // const info = monthData[selected] ?? { done: 0, total: 5 };
+      // const names = ["물 2L 마시기", "아침 스트레칭 10분", "저녁 공부 1시간", "영양제 챙기기", "일기 쓰기"];
+      //위에꺼 주석 후 api로 전환
+      // const logs = names.map((title, i) => ({ id: i + 1, title, done: i < info.done }));
+      // if (alive) setDayLogs(logs);
     })();
     return () => { alive = false; };
   }, [selected]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -175,7 +176,7 @@ export default function RoutineHistory() {
               {dayLogs.map((log) => (
                 <div key={log.id} className={`${styles.logItem} ${log.done ? styles.logDone : styles.logUndone}`}>
                   <span className={styles.logIcon}>{log.done ? <CheckCircle /> : <EmptyCircle />}</span>
-                  <span className={styles.logText}>{log.title}</span>
+                  <span className={styles.logText}>{log.routine.title}</span>
                 </div>
               ))}
             </div>
