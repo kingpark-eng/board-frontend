@@ -40,6 +40,6 @@ export const getDayLogs=(logDate)=>{
 //     return api.get("/api/routines");
 // }
 
-// export function deleteRoutine(){
-//     return api.get("/api/routines");
-// }
+export function deleteRoutine(id){
+    return api.delete(`/api/routines/${id}/delete`);
+}

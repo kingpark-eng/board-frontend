@@ -1,0 +1,22 @@
+.deleteBtn {
+  margin-left: auto;              /* 카드 오른쪽 끝으로 밀기 */
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text2);
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.4;                     /* 평소엔 숨김 */
+  transition: all 0.15s ease;
+} 
+
+.deleteBtn:hover {
+  color: var(--red);
+  border-color: rgba(224, 92, 92, 0.4);
+  background: rgba(224, 92, 92, 0.08);
+}
+
+.deleteBtn:active {
+  transform: scale(0.95);
+}

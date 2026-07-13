@@ -1,56 +1,52 @@
 import { useState, useEffect } from "react";
-import styles from "./Home.module.css";
-import { getRoutines, addRoutine, deleteRoutine, toggleRoutineLog } from "../api/routinesApi";
+import styles from "./Home.module.css"; 
+import routineStyles from "./RoutinePanel.module.css";
 
 // 오늘의 루틴 패널.
 // compact=true 로 넘기면 메인 대시보드용(입력창 유지, 여백 축소),
 // 전용 /routines 페이지에서도 그대로 재사용할 수 있습니다.
-export default function RoutinePanel({ compact = false }) {
-  const [routines, setRoutines] = useState([]);
+export default function RoutinePanel({routines, onToggle, loading, add, del}) {
+  // const [routines, setRoutines] = useState([]);
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(true);
-  console.log(routines + " 1");
-  useEffect(() => {
-    let alive = true;
-    (async () => {
-      try {
-        const res = await getRoutines();
-        console.log(routines + " 2");
-        if (alive) setRoutines(res.data);
-      } finally {
-        if (alive) setLoading(false);
-      }
-      console.log(routines + " 3");
-    })();
-    return () => {
-      alive = false;
-    };
-  }, []);
-  console.log(routines + " 4");
-  const doneCount = (routines ?? []).filter((r) => r?.done).length; 
-  console.log(routines + " 5");
+
+  // useEffect(() => {
+  //   let alive = true;
+  //   (async () => {
+  //     try {
+  //       const res = await getRoutines();
+  //       // if (alive) setRoutines(res.data);
+  //     } finally {
+  //       // if (alive) setLoading(false);
+  //     }
+  //     console.log(routines + " 3");
+  //   })();
+  //   return () => {
+  //     alive = false;
+  //   };
+  // }, []); 
+  console.log(routines);
+  const doneCount = (routines ?? []).filter((r) => r?.done).length;  
   const total = routines.length;
   const percent = total ? Math.round((doneCount / total) * 100) : 0;
 
-  const toggle = async (id) => {
-    console.log(routines + " 6");
-    // 낙관적 업데이트: UI 먼저 바꾸고 실패 시 롤백
-    setRoutines((prev) => prev.map((r) => (r.id === id ? { ...r, done: !r.done } : r)));
-    try { 
-      await toggleRoutineLog(id); 
-    } catch { /* 롤백 처리 */  
-      setRoutines((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, done: !r.done } : r))
-    )}
-  };
-
-  const add = async () => {
+  // const toggle = async (id) => {
+  //   // 낙관적 업데이트: UI 먼저 바꾸고 실패 시 롤백
+  //   setRoutines((prev) => prev.map((r) => (r.id === id ? { ...r, done: !r.done } : r)));
+  //   try { 
+  //     await toggleRoutineLog(id); 
+  //   } catch { /* 롤백 처리 */  
+  //     setRoutines((prev) =>
+  //     prev.map((r) => (r.id === id ? { ...r, done: !r.done } : r))
+  //   )}
+  // };
+ 
+  const submit=()=>{
     const title = input.trim();
-    if (!title) return;
-    const res = await addRoutine(title);
-    setRoutines((prev) => [...prev, res.data]);
+    console.log(title);
+    if(!title) return;
+    add(title);
     setInput("");
-  };
+  }
 
   return (
     <section>
@@ -85,7 +81,7 @@ export default function RoutinePanel({ compact = false }) {
             >
               <button
                 className={`${styles.check} ${r.done ? styles.checkOn : ""}`}
-                onClick={() => toggle(r.id)}
+                onClick={() => onToggle(r.id)}
                 aria-label={r.done ? "완료 취소" : "완료 표시"}
               >
                 {r.done && <span className={styles.checkMark}>✓</span>}
@@ -95,6 +91,9 @@ export default function RoutinePanel({ compact = false }) {
               >
                 {r.title}
               </span>
+              <button className={routineStyles.deleteBtn} onClick={()=> del(r.id)}>
+                삭제
+              </button>
             </div>
           ))}
         </div>
@@ -105,10 +104,10 @@ export default function RoutinePanel({ compact = false }) {
           className={styles.addInput}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && add()}
+          onKeyDown={(e) => e.key === "Enter" && submit()}
           placeholder="새 루틴 추가"
         />
-        <button className={styles.smallBtn} onClick={add}>
+        <button className={styles.smallBtn} onClick={submit}>
           추가
         </button>
       </div>

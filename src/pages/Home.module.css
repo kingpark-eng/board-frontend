@@ -137,7 +137,9 @@
   border-radius: 12px;
   transition: border-color 0.15s ease, opacity 0.2s ease;
 }
-.routineCard:hover { border-color: var(--accent); }
+.routineCard:hover {   color: var(--red);
+  border-color: rgba(224, 92, 92, 0.4);
+  background: rgba(224, 92, 92, 0.08); }
 .routineDone { opacity: 0.55; }
 .check {
   flex-shrink: 0;
